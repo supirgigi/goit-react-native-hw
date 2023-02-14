@@ -1,1 +1,1 @@
-# goit-react-native-hw
+# React Native homework
