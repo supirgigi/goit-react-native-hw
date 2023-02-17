@@ -142,7 +142,7 @@ export default function RegistrationScreen() {
                   activeOpacity={0.9}
                   onPress={handleSubmit}
                 >
-                  <Text style={styles.btnLabel}>Зарегестрироваться</Text>
+                  <Text style={styles.btnLabel}>Зарегистрироваться</Text>
                 </TouchableOpacity>
                 <Text style={styles.link}>Уже есть аккаунт? Войти</Text>
               </View>
