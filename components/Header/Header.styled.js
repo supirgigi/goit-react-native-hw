@@ -1,0 +1,32 @@
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  header: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    height: 88,
+    borderBottomWidth: 1,
+    borderColor: '#b3b3b3',
+    backgroundColor: '#ffffff',
+  },
+
+  title: {
+    paddingLeft: 40,
+    paddingRight: 40,
+    paddingTop: 11,
+    paddingBottom: 11,
+    fontSize: 17,
+    lineHeight: 22,
+    color: '#212121',
+    fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
+  },
+
+  btn: {
+    position: 'absolute',
+    right: 16,
+    top: 54,
+  },
+});
+
+export default styles;

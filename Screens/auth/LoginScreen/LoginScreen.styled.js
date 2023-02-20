@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
     fontSize: 16,
     lineHeight: 19,
+    fontFamily: 'Roboto-Regular',
   },
 
   passwordLabel: {
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: '#1B4371',
+    fontFamily: 'Roboto-Regular',
   },
 
   btn: {
@@ -71,13 +73,19 @@ const styles = StyleSheet.create({
     color: '#f0f8ff',
     fontSize: 16,
     lineHeight: 19,
+    fontFamily: 'Roboto-Regular',
   },
 
   link: {
-    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  linkText: {
     fontSize: 16,
     lineHeight: 19,
     color: '#1B4371',
+    fontFamily: 'Roboto-Regular',
   },
 });
 

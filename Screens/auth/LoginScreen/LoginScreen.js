@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react';
-
-import styles from './RegistrationScreen.styled';
-
 import {
   Text,
   View,
@@ -15,21 +12,22 @@ import {
   Dimensions,
 } from 'react-native';
 
-import { AntDesign } from '@expo/vector-icons';
+import { useAuth } from '../../../App';
+import styles from './LoginScreen.styled';
 
 const initialState = {
   email: '',
   password: '',
-  login: '',
 };
 
-export default function RegistrationScreen() {
+export default function LoginScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
   const [dimensions, setDimensions] = useState(
     Dimensions.get('window').width - 16 * 2
   );
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const { logIn } = useAuth();
 
   useEffect(() => {
     const dimensionsSubscription = Dimensions.addEventListener(
@@ -40,7 +38,7 @@ export default function RegistrationScreen() {
     );
 
     return () => {
-      dimensionsSubscription.remove();
+      dimensionsSubscription?.remove();
     };
   }, []);
 
@@ -49,6 +47,7 @@ export default function RegistrationScreen() {
     Keyboard.dismiss();
     console.log(state);
     setState(initialState);
+    logIn();
   };
 
   const keyboardHide = () => {
@@ -61,43 +60,21 @@ export default function RegistrationScreen() {
       <View style={styles.container}>
         <ImageBackground
           style={styles.bgImage}
-          source={require('../../assets/images/auth_bg.jpg')}
+          source={require('../../../assets/images/auth_bg.jpg')}
         >
           <KeyboardAvoidingView
             style={{ width: '100%' }}
             behavior={Platform.OS === 'ios' && 'padding'}
           >
             <View style={styles.wrapper}>
-              <View style={styles.avatarWrapper}>
-                <AntDesign
-                  style={styles.avatarIcon}
-                  name="pluscircleo"
-                  size={25}
-                  color="#FF6C00"
-                />
-              </View>
-              <Text style={styles.title}>Регистрация</Text>
+              <Text style={styles.title}>Войти</Text>
               <View
                 style={{
                   ...styles.form,
                   width: dimensions,
-                  marginBottom: isShowKeyboard ? -110 : 78,
+                  marginBottom: isShowKeyboard ? -110 : 144,
                 }}
               >
-                <TextInput
-                  style={styles.input}
-                  value={state.login}
-                  onFocus={() => setIsShowKeyboard(true)}
-                  onChangeText={value =>
-                    setState(prevState => ({
-                      ...prevState,
-                      login: value,
-                    }))
-                  }
-                  placeholder="Логин"
-                  placeholderTextColor="#BDBDBD"
-                />
-
                 <TextInput
                   style={styles.input}
                   value={state.email}
@@ -108,12 +85,13 @@ export default function RegistrationScreen() {
                       email: value,
                     }))
                   }
+                  onSubmitEditing={keyboardHide}
                   placeholder="Адрес электронной почты"
                   placeholderTextColor="#BDBDBD"
                   keyboardType="email-address"
                 />
 
-                <View style={{ position: 'relative' }}>
+                <View>
                   <TextInput
                     style={styles.input}
                     value={state.password}
@@ -125,6 +103,7 @@ export default function RegistrationScreen() {
                         password: value,
                       }))
                     }
+                    onSubmitEditing={keyboardHide}
                     placeholder="Пароль"
                     placeholderTextColor="#BDBDBD"
                   />
@@ -142,9 +121,17 @@ export default function RegistrationScreen() {
                   activeOpacity={0.9}
                   onPress={handleSubmit}
                 >
-                  <Text style={styles.btnLabel}>Зарегистрироваться</Text>
+                  <Text style={styles.btnLabel}>Войти</Text>
                 </TouchableOpacity>
-                <Text style={styles.link}>Уже есть аккаунт? Войти</Text>
+                <TouchableOpacity
+                  style={styles.link}
+                  activeOpacity={0.7}
+                  onPress={() => navigation.navigate('Register')}
+                >
+                  <Text style={styles.linkText}>
+                    Нет аккаунта? Зарегистрироваться
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </KeyboardAvoidingView>

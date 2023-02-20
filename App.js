@@ -1,10 +1,12 @@
-import { useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { createContext, useState, useContext, useCallback } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import RegistrationScreen from './Screens/RegistrationScreen/RegistrationScreen';
-import LoginScreen from './Screens/LoginScreen/LoginScreen';
+import useRoute from './router';
+
+const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
 
 SplashScreen.preventAutoHideAsync();
 
@@ -12,7 +14,9 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
+    'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
   });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -20,20 +24,25 @@ export default function App() {
     }
   }, [fontsLoaded]);
 
+  const logIn = () => {
+    setIsLoggedIn(true);
+  };
+
+  const logOut = () => {
+    setIsLoggedIn(false);
+  };
+
+  const routing = useRoute(isLoggedIn);
+
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <View onLayout={onLayoutRootView} style={styles.root}>
-      <RegistrationScreen />
-      {/* <LoginScreen /> */}
-    </View>
+    <AuthContext.Provider value={{ isLoggedIn, logIn, logOut }}>
+      <NavigationContainer onReady={onLayoutRootView}>
+        {routing}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-});
