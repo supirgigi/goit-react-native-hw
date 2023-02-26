@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
 
+  btnLeft: {
+    position: 'absolute',
+    left: 16,
+    top: 54,
+  },
+
   title: {
     paddingLeft: 40,
     paddingRight: 40,
@@ -22,7 +28,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
   },
 
-  btn: {
+  btnRight: {
     position: 'absolute',
     right: 16,
     top: 54,
