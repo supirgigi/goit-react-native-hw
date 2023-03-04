@@ -1,12 +1,10 @@
-import { createContext, useState, useContext, useCallback } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { useCallback } from 'react';
+import { Provider } from 'react-redux';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import useRoute from './router';
-
-const AuthContext = createContext();
-export const useAuth = () => useContext(AuthContext);
+import { store } from './src/redux/store';
+import Main from './src/components/Main/Main';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -16,7 +14,6 @@ export default function App() {
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
     'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -24,25 +21,13 @@ export default function App() {
     }
   }, [fontsLoaded]);
 
-  const logIn = () => {
-    setIsLoggedIn(true);
-  };
-
-  const logOut = () => {
-    setIsLoggedIn(false);
-  };
-
-  const routing = useRoute(isLoggedIn);
-
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, logIn, logOut }}>
-      <NavigationContainer onReady={onLayoutRootView}>
-        {routing}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <Provider store={store}>
+      <Main onReady={onLayoutRootView} />
+    </Provider>
   );
 }
