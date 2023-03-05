@@ -1,1 +1,1 @@
-# React Native homework 6
+# React Native homework
